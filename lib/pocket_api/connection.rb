@@ -1,3 +1,4 @@
+require 'pry'
 module PocketApi
   class Connection
     include HTTParty
@@ -17,6 +18,7 @@ module PocketApi
       # 3. Do a sample call to API to see if it works
       #####################################################
       def generate_request_token(body_options={}, headers_options={})
+        binding.pry
         response = post("/v3/oauth/request", {:body => MultiJson.dump({:consumer_key => @client_key}.merge(body_options)), :headers => {"Content-Type" => "application/json; charset=UTF-8", "X-Accept" => "application/json"}.merge(headers_options)})
         if response.success? && response.parsed_response["code"]
           # Should be a string body like "code=12345678"

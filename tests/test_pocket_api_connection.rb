@@ -6,6 +6,14 @@ require 'minitest/autorun'
 require 'pocket_api'
 
 describe PocketApi::Connection do
+
+  attr_reader :connection
+
+  def setup
+    @connection = PocketApi::Connection
+    @connection.client_key = "4"
+  end
+
   it "sets default base_uri to https://getpocket.com" do
     PocketApi::Connection.base_uri.must_equal "https://getpocket.com"
   end
@@ -19,7 +27,10 @@ describe PocketApi::Connection do
   end
 
   describe "generate_request_token" do
-    it "returns params :code if response success"
+    it "returns params :code if response success" do
+      request_token = connection.generate_request_token
+      assert_equal "?", request_token
+    end
     it "raises error if response not success or params :code is missing"
   end
 
